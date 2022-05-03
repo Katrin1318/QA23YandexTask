@@ -11,9 +11,11 @@ public class SearchItemTest extends TestBase{
         app.getMainPage().clickOnMarketTab();
         app.getHeader().switchToNextTab(1);
         app.getHeader().selectExpressDepartment();
-        app.getHeader().acceptCookies();
+        //app.getHeader().acceptCookies();
 
         app.getSidePanel().selectDepartmentType("elektronika/23282330");
+        app.getHeader().acceptCookies();
+        app.getItemHelper().waitTime(2000);
         app.getItemHelper().filterItem(new Item().setItemType("smartfony-i-aksessuary/23282379")
                 .setPriceFrom("20000")
                 .setPriceTo("35000")
