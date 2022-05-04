@@ -1,8 +1,13 @@
 package com.example.testTask.fw;
 
+import com.google.common.io.Files;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,5 +43,18 @@ public class HelperBase {
 
     public void click(By by) {
         wd.findElement(by).click();
+    }
+
+    public String takeScreenshot() {
+
+        File tmp = ((TakesScreenshot) wd).getScreenshotAs(OutputType.FILE);
+
+        File screenshot = new File("screenshots/screen-" + System.currentTimeMillis() + ".png");
+        try {
+            Files.copy(tmp,screenshot);
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        return screenshot.getAbsolutePath();
     }
 }

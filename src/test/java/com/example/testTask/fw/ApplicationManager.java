@@ -4,12 +4,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.BrowserType;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
 
-    WebDriver wd;
+    //WebDriver wd;
+    EventFiringWebDriver wd;
 
     MainPageHelper mainPage;
     HeaderHelper header;
@@ -40,9 +42,9 @@ public class ApplicationManager {
 
     public void init() {
         if (browser.equals(BrowserType.CHROME)) {
-            wd = new ChromeDriver();
+            wd = new EventFiringWebDriver(new ChromeDriver());
         } else if (browser.equals(BrowserType.FIREFOX)){
-            wd = new FirefoxDriver();
+            wd = new EventFiringWebDriver(new FirefoxDriver());
         }
         wd.manage().window().maximize();
         wd.navigate().to("https://yandex.ru/");
@@ -52,6 +54,8 @@ public class ApplicationManager {
         header = new HeaderHelper(wd);
         sidePanel = new SidePanelHelper(wd);
         itemHelper = new ItemHelper(wd);
+
+        wd.register(new MyListener());
     }
 
     public void stop() {
